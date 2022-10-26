@@ -1,6 +1,6 @@
 Simple todo-app
 
-commands:
+`commands:
 npm install - install project
 npm server - run backend
-npm start - run frontend
+npm start - run frontend`
