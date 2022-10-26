@@ -1,3 +1,10 @@
 {
-  "todos": []
+  "todos": [
+    {
+      "id": "70609277-e464-4b95-8618-119d5caad8da",
+      "text": "maciej jest spoko",
+      "createdAt": "Wed Oct 26 2022 21:22:37 GMT+0200 (czas środkowoeuropejski letni)",
+      "updateDate": "Wed Oct 26 2022 21:22:57 GMT+0200 (czas środkowoeuropejski letni)"
+    }
+  ]
 }

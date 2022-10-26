@@ -12,7 +12,9 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getData(URL);
-      setTodos(data);
+      if (data) {
+        setTodos(data);
+      }
     };
     fetchData();
   }, []);
@@ -59,33 +61,44 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header>
+    <div className="app-container">
+      <header className="header">
         <form onSubmit={handleSubmit}>
           <input
+            className="header__input"
             type="text"
             placeholder="input todo.."
             value={todo}
             onChange={handleInput}
           />
-          <button type="submit">ADD TODO</button>
+          <button type="submit" className="header__btn">
+            ADD TODO
+          </button>
         </form>
       </header>
-      <ul>
-        {todos.map((todo) => {
-          return (
-            <ListItem
-              key={todo.id}
-              {...todo}
-              handleRemove={handleRemove}
-              updateAfterEdit={updateAfterEdit}
-            />
-          );
-        })}
-      </ul>
-      <button type="button" onClick={handleRemoveAll}>
-        Remove all
-      </button>
+      {todos.length > 0 && (
+        <main>
+          <ul className="todos">
+            {todos.map((todo) => {
+              return (
+                <ListItem
+                  key={todo.id}
+                  {...todo}
+                  handleRemove={handleRemove}
+                  updateAfterEdit={updateAfterEdit}
+                />
+              );
+            })}
+          </ul>
+          <button
+            className="remove-all"
+            type="button"
+            onClick={handleRemoveAll}
+          >
+            Remove all
+          </button>
+        </main>
+      )}
     </div>
   );
 }
