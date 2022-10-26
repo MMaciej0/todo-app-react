@@ -1,11 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import ListItem from './components/ListItem';
+import { deleteData, getData, postData, updateData } from './utils/http';
 
 function App() {
+  const URL = 'http://localhost:3004/todos';
   const [todo, setTodo] = useState('');
   const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getData(URL);
+      setTodos(data);
+    };
+    fetchData();
+  }, []);
 
   const handleInput = (e) => {
     e.preventDefault();
@@ -18,18 +28,24 @@ function App() {
       const newTodo = {
         id: uuidv4(),
         text: todo,
-        createdAt: new Date().toDateString(),
+        createdAt: new Date().toString(),
       };
+      postData(URL, newTodo);
       setTodos([...todos, newTodo]);
       setTodo('');
     }
   };
 
   const handleRemove = (id) => {
+    deleteData(URL, id);
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
   const handleRemoveAll = () => {
+    const IDs = todos.map((todo) => todo.id);
+    IDs.forEach((id) => {
+      deleteData(URL, id);
+    });
     setTodos([]);
   };
 
@@ -37,8 +53,9 @@ function App() {
     const newTodos = [...todos];
     const selectedTodo = newTodos.find((todo) => todo.id === id);
     selectedTodo.text = editValue;
+    selectedTodo.updateDate = new Date().toString();
+    updateData(URL, id, selectedTodo);
     setTodos(newTodos);
-    // todo: after editing add update date to item
   };
 
   return (

@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 
-function ListItem({ id, text, createdAt, handleRemove, updateAfterEdit }) {
+function ListItem({
+  id,
+  text,
+  createdAt,
+  updateDate,
+  handleRemove,
+  updateAfterEdit,
+}) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState('');
 
@@ -28,7 +35,9 @@ function ListItem({ id, text, createdAt, handleRemove, updateAfterEdit }) {
           <button onClick={() => setIsEditing(true)}>edit</button>
         </>
       )}
-      <p>Created at: {createdAt}</p>
+      <p>
+        {updateDate ? `Edited at: ${updateDate}` : `Created at: ${createdAt}`}{' '}
+      </p>
     </li>
   );
 }
